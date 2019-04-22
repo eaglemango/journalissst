@@ -1,0 +1,41 @@
+import configs
+import flask
+import telebot
+import time
+
+bot = telebot.TeleBot(configs.TOKEN)
+
+app = flask.Flask(__name__)
+
+
+@app.route(configs.WEBHOOK_URL_PATH, methods=["POST"])
+def webhook():
+    if flask.request.headers.get("content-type") == "application/json":
+        json_string = flask.request.get_data().decode("utf-8")
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return ''
+    else:
+        flask.abort(403)
+
+
+@bot.message_handler(commands=["start"])
+def start_command(message):
+    bot.reply_to(message, "Hello, friend! My name is Journalissst.")
+
+
+@bot.message_handler(commands=["help"])
+def send_help(message):
+    bot.send_message(message.chat.id, "Can I help?")
+
+bot.remove_webhook()
+
+time.sleep(1)
+
+bot.set_webhook(url=configs.WEBHOOK_URL_BASE + configs.WEBHOOK_URL_PATH,
+                certificate=open(configs.WEBHOOK_SSL_CERT, 'r'))
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0",
+            port=configs.WEBHOOK_PORT,
+            ssl_context=(configs.WEBHOOK_SSL_CERT, configs.WEBHOOK_SSL_PRIV))
