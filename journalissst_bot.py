@@ -2,6 +2,14 @@ import configs
 import flask
 import telebot
 import time
+from news_generator import ITNewsGenerator
+
+HELP_STRING = """
+I suppose, you'd like to get amazing article from me. Today you're very lucky.
+Choose any theme:
+/it
+/political
+"""
 
 bot = telebot.TeleBot(configs.TOKEN)
 
@@ -26,7 +34,18 @@ def start_command(message):
 
 @bot.message_handler(commands=["help"])
 def send_help(message):
-    bot.send_message(message.chat.id, "Can I help?")
+    bot.send_message(message.chat.id, HELP_STRING)
+
+
+@bot.message_handler(commands=["it"])
+def send_it_news(message):
+    bot.send_message(message.chat.id, ITNewsGenerator().generate(50))
+
+
+@bot.message_handler(commands=["political"])
+def send_political_news(message):
+    bot.send_message(message.chat.id, "Sorry, but I lied. I can't write political articles now.")
+
 
 bot.remove_webhook()
 
