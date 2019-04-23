@@ -1,4 +1,4 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 import pickle
 import requests
@@ -10,7 +10,7 @@ HEADERS = {
 
 
 class NewsParser(ABC):
-    @abstractclassmethod
+    @abstractmethod
     def parse(self, page_count):
         pass
 
