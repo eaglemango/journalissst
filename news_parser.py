@@ -11,12 +11,12 @@ HEADERS = {
 
 class NewsParser(ABC):
     @abstractmethod
-    def parse(self, page_count):
+    def parse(self, page_count: int) -> None:
         pass
 
 
 class IPhonesNewsParser(NewsParser):
-    def parse(self, page_count):
+    def parse(self, page_count: int) -> None:
         BASE_URL = "https://www.iphones.ru/page"
 
         post_list = []

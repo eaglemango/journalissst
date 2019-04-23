@@ -3,11 +3,11 @@ import numpy
 import pickle
 
 
-def is_next_title(word):
+def is_next_title(word: str) -> bool:
     return word[-1] in ['.', '!', '?']
 
 
-def preprocess(word: str, is_title):
+def preprocess(word: str, is_title: bool) -> str:
     if (is_title):
         return word[0].upper() + word[1:]
     else:
@@ -15,22 +15,22 @@ def preprocess(word: str, is_title):
 
 
 class NewsGenerator(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.dictionary = {}
 
     @abstractmethod
-    def generate(self, length):
+    def generate(self, min_length: int) -> str:
         pass
 
 
 class ITNewsGenerator(NewsGenerator):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         with open("./news_data/it", "rb") as it_dict_data:
             self.dictionary = pickle.load(it_dict_data)
 
-    def generate(self, length):
+    def generate(self, min_length: int) -> str:
         words = []
 
         next_title = True
@@ -50,7 +50,7 @@ class ITNewsGenerator(NewsGenerator):
 
             next_title = is_next_title(word)
 
-        if len(words) < length:
-            return self.generate(length - 1)
+        if len(words) < min_length:
+            return self.generate(min_length - 1)
         else:
             return ' '.join(words)
