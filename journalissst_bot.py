@@ -1,8 +1,8 @@
-import configs
+import utils.configs as configs
 import flask
 import telebot
 import time
-from news_generator import ITNewsGenerator
+from utils.news_generator import ITNewsGenerator
 
 HELP_STRING = """
 I suppose, you'd like to get amazing article from me. Today you're very lucky.
