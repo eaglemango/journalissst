@@ -1,4 +1,4 @@
-# Journalissst
+# Journalissst [![Build Status](https://travis-ci.com/eaglemango/journalissst.svg?branch=dev-travis)](https://travis-ci.com/eaglemango/journalissst)
 
 Journalissst is a Telegram bot that can generate messages using precomputed data.
 It prefers newspapers for breaskfast, so the result of its work is something, that distantly looks like an article.
