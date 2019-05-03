@@ -2,12 +2,13 @@ import utils.configs as configs
 import flask
 import telebot
 import time
-from utils.news_generator import ITNewsGenerator
+from utils.news_generator import ITNewsGenerator, ImprovedITNewsGenerator
 
 HELP_STRING = """
 I suppose, you'd like to get amazing article from me. Today you're very lucky.
 Choose any theme:
 /it
+/improved_it - more powerful algorithm
 /political
 """
 
@@ -42,9 +43,15 @@ def send_it_news(message):
     bot.send_message(message.chat.id, ITNewsGenerator().generate(50))
 
 
+@bot.message_handler(commands=["improved_it"])
+def send_improved_it_news(message):
+    bot.send_message(message.chat.id, ImprovedITNewsGenerator().generate(50))
+
+
 @bot.message_handler(commands=["political"])
 def send_political_news(message):
-    bot.send_message(message.chat.id, "Sorry, but I lied. I can't write political articles now.")
+    bot.send_message(message.chat.id, "Sorry, but I lied. I can't write \
+                                       political articles now.")
 
 
 bot.remove_webhook()
