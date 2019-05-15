@@ -18,7 +18,7 @@ WEBHOOK_SSL_PRIV = "./certificates/webhook_pkey.pem"
 DESIRABLE_LENGTH = 50
 
 # File Paths
-WORK_DIRECTORY = p.join(p.abspath(__file__), "..")
+WORK_DIRECTORY = p.join(p.dirname(p.abspath(__file__)), "..")
 NEWS_DATA_DIRECTORY = p.join(WORK_DIRECTORY, "news_data")
 IT_DATA = p.join(NEWS_DATA_DIRECTORY, "it")
 IMPROVED_IT_DATA = p.join(NEWS_DATA_DIRECTORY, "improved_it")
