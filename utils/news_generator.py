@@ -18,10 +18,14 @@ def preprocess(word: str, is_title: bool) -> str:
 class NewsGenerator(ABC):
     def __init__(self) -> None:
         self.dictionary = {}
+        self.words = []
 
     @abstractmethod
     def generate(self, min_length: int) -> str:
-        pass
+        if len(self.words) < min_length:
+            return self.generate(min_length - 1)
+        else:
+            return ' '.join(self.words)
 
 
 class ITNewsGenerator(NewsGenerator):
@@ -32,12 +36,12 @@ class ITNewsGenerator(NewsGenerator):
             self.dictionary = pickle.load(it_dict_data)
 
     def generate(self, min_length: int) -> str:
-        words = []
+        self.words = []
 
         next_title = True
 
         word = numpy.random.choice(list(self.dictionary))
-        words.append(preprocess(word, next_title))
+        self.words.append(preprocess(word, next_title))
 
         next_title = is_next_title(word)
 
@@ -51,14 +55,11 @@ class ITNewsGenerator(NewsGenerator):
             word = numpy.random.choice(list(self.dictionary[word]),
                                        p=probabilities)
 
-            words.append(preprocess(word, next_title))
+            self.words.append(preprocess(word, next_title))
 
             next_title = is_next_title(word)
 
-        if len(words) < min_length:
-            return self.generate(min_length - 1)
-        else:
-            return ' '.join(words)
+        return super().generate(min_length)
 
 
 class ImprovedITNewsGenerator(NewsGenerator):
@@ -69,12 +70,12 @@ class ImprovedITNewsGenerator(NewsGenerator):
             self.dictionary = pickle.load(it_dict_data)
 
     def generate(self, min_length: int) -> str:
-        words = []
+        self.words = []
 
         next_title = True
 
         word_pair = numpy.random.choice(list(self.dictionary))
-        words.append(preprocess(word_pair, next_title))
+        self.words.append(preprocess(word_pair, next_title))
 
         next_title = is_next_title(word_pair)
 
@@ -90,11 +91,8 @@ class ImprovedITNewsGenerator(NewsGenerator):
 
             word_pair = "{0} {1}".format(word_pair.split(' ')[1], next_word)
 
-            words.append(preprocess(next_word, next_title))
+            self.words.append(preprocess(next_word, next_title))
 
             next_title = is_next_title(word_pair)
 
-        if len(words) < min_length:
-            return self.generate(min_length - 1)
-        else:
-            return ' '.join(words)
+        return super().generate(min_length)
