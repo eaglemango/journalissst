@@ -9,3 +9,6 @@ WEBHOOK_URL_PATH = "/{0}/".format(TOKEN)
 
 WEBHOOK_SSL_CERT = "./certificates/webhook_cert.pem"
 WEBHOOK_SSL_PRIV = "./certificates/webhook_pkey.pem"
+
+
+DESIRABLE_LENGTH = 50

@@ -40,12 +40,12 @@ def send_help(message):
 
 @bot.message_handler(commands=["it"])
 def send_it_news(message):
-    bot.send_message(message.chat.id, ITNewsGenerator().generate(50))
+    bot.send_message(message.chat.id, ITNewsGenerator().generate(configs.DESIRABLE_LENGTH))
 
 
 @bot.message_handler(commands=["improved_it"])
 def send_improved_it_news(message):
-    bot.send_message(message.chat.id, ImprovedITNewsGenerator().generate(50))
+    bot.send_message(message.chat.id, ImprovedITNewsGenerator().generate(configs.DESIRABLE_LENGTH))
 
 
 @bot.message_handler(commands=["political"])
