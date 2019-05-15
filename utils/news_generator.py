@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import numpy
 import pickle
+import utils.configs as configs
 
 
 def is_next_title(word: str) -> bool:
@@ -27,7 +28,7 @@ class ITNewsGenerator(NewsGenerator):
     def __init__(self) -> None:
         super().__init__()
 
-        with open("./news_data/it", "rb") as it_dict_data:
+        with open(configs.IT_DATA, "rb") as it_dict_data:
             self.dictionary = pickle.load(it_dict_data)
 
     def generate(self, min_length: int) -> str:
@@ -64,7 +65,7 @@ class ImprovedITNewsGenerator(NewsGenerator):
     def __init__(self) -> None:
         super().__init__()
 
-        with open("./news_data/improved_it", "rb") as it_dict_data:
+        with open(configs.IMPROVED_IT_DATA, "rb") as it_dict_data:
             self.dictionary = pickle.load(it_dict_data)
 
     def generate(self, min_length: int) -> str:
