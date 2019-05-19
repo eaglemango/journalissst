@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pickle
 import requests
 import time
+import utils.configs as configs
 
 HEADERS = {
     "User-Agent": "Chrome/73.0.3683.103"
@@ -34,7 +35,7 @@ class IPhonesNewsParser(NewsParser):
 
             link_list.append(soup.find("a").get("href"))
 
-        with open("./news_data/it", "rb") as it_dict_data:
+        with open(configs.IT_DATA, "rb") as it_dict_data:
             it_dict = pickle.load(it_dict_data)
 
         for link in link_list:
@@ -53,7 +54,7 @@ class IPhonesNewsParser(NewsParser):
                     else:
                         it_dict[words[i]][words[i + 1]] += 1
 
-        with open("./news_data/it", "wb") as it_dict_data:
+        with open(configs.IT_DATA, "wb") as it_dict_data:
             pickle.dump(it_dict, it_dict_data)
 
 
@@ -76,7 +77,7 @@ class ImprovedIPhonesNewsParser(NewsParser):
 
             link_list.append(soup.find("a").get("href"))
 
-        with open("./news_data/improved_it", "rb") as it_dict_data:
+        with open(configs.IMPROVED_IT_DATA, "rb") as it_dict_data:
             it_dict = pickle.load(it_dict_data)
 
         for link in link_list:
@@ -97,5 +98,5 @@ class ImprovedIPhonesNewsParser(NewsParser):
                     else:
                         it_dict[word_pair][words[i + 2]] += 1
 
-        with open("./news_data/improved_it", "wb") as it_dict_data:
+        with open(configs.IMPROVED_IT_DATA, "wb") as it_dict_data:
             pickle.dump(it_dict, it_dict_data)

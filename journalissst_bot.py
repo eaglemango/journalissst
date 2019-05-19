@@ -40,12 +40,12 @@ def send_help(message):
 
 @bot.message_handler(commands=["it"])
 def send_it_news(message):
-    bot.send_message(message.chat.id, ITNewsGenerator().generate(50))
+    bot.send_message(message.chat.id, ITNewsGenerator().generate(configs.DESIRABLE_LENGTH))
 
 
 @bot.message_handler(commands=["improved_it"])
 def send_improved_it_news(message):
-    bot.send_message(message.chat.id, ImprovedITNewsGenerator().generate(50))
+    bot.send_message(message.chat.id, ImprovedITNewsGenerator().generate(configs.DESIRABLE_LENGTH))
 
 
 @bot.message_handler(commands=["political"])
@@ -62,6 +62,6 @@ bot.set_webhook(url=configs.WEBHOOK_URL_BASE + configs.WEBHOOK_URL_PATH,
                 certificate=open(configs.WEBHOOK_SSL_CERT, 'r'))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",
+    app.run(host=configs.WEBHOOK_LOCAL_HOST,
             port=configs.WEBHOOK_PORT,
             ssl_context=(configs.WEBHOOK_SSL_CERT, configs.WEBHOOK_SSL_PRIV))
